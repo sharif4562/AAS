@@ -1,0 +1,12 @@
+import numpy as np
+from scipy.optimize import minimize
+
+def func(x):
+    return (x - 3)**2 + 5
+
+res = minimize(func, x0=0)
+x_min = res.x[0]
+industry = "AI Ops Optimization"
+
+print("Function Minimum at x =", round(x_min, 4))
+print("Industry:", industry)
