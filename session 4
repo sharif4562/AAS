@@ -1,0 +1,89 @@
+import os
+import zipfile
+import urllib.request
+import numpy as np
+import pandas as pd
+
+DATA_URL = "https://archive.ics.uci.edu/ml/machine-learning-databases/00240/UCI%20HAR%20Dataset.zip"
+ZIP_NAME = "UCI_HAR_Dataset.zip"
+DATA_DIR = "UCI HAR Dataset"
+
+if not os.path.exists(DATA_DIR):
+    urllib.request.urlretrieve(DATA_URL, ZIP_NAME)
+    with zipfile.ZipFile(ZIP_NAME, "r") as zip_ref:
+        zip_ref.extractall()
+    os.remove(ZIP_NAME)
+
+SIGNAL_PATH = os.path.join(DATA_DIR, "train", "Inertial Signals")
+
+acc_x = pd.read_csv(os.path.join(SIGNAL_PATH, "body_acc_x_train.txt"), delim_whitespace=True, header=None).values
+acc_y = pd.read_csv(os.path.join(SIGNAL_PATH, "body_acc_y_train.txt"), delim_whitespace=True, header=None).values
+acc_z = pd.read_csv(os.path.join(SIGNAL_PATH, "body_acc_z_train.txt"), delim_whitespace=True, header=None).values
+
+acc_magnitude = np.sqrt(acc_x**2 + acc_y**2 + acc_z**2)
+velocity_proxy = np.mean(acc_magnitude)
+altitude_proxy = np.mean(acc_z)
+
+if altitude_proxy > 0:
+    robot_type = "Aerial Autonomous Robot"
+    industry_1 = "NVIDIA Jetson Drone Systems"
+else:
+    robot_type = "Ground Robot"
+    industry_1 = "Ground Robotics"
+
+DEPTH_FILE = "depth_frame.npy"
+
+if not os.path.exists(DEPTH_FILE):
+    depth_frame = np.random.uniform(0.3, 3.0, (480, 640))
+    np.save(DEPTH_FILE, depth_frame)
+
+depth_frame = np.load(DEPTH_FILE)
+
+min_distance = np.min(depth_frame)
+velocity = 1.0
+
+if min_distance < 0.5:
+    velocity = 0
+    status = "Robot Halted"
+    industry_2 = "Amazon Fulfillment Robots"
+else:
+    status = "Robot Moving"
+    industry_2 = "Autonomous Navigation"
+
+sensors = {
+    "Camera": 80,
+    "Radar": 160,
+    "LiDAR": 250
+}
+
+selected_sensor = max(sensors, key=sensors.get)
+max_range = sensors[selected_sensor]
+industry_3 = "Tesla Autopilot"
+
+distance = 5.0
+time = 2.0
+speed = distance / time
+industry_4 = "Apple Robotics"
+
+print("SESSION 1 – NVIDIA")
+print("Velocity Proxy:", round(velocity_proxy, 4))
+print("Altitude Proxy:", round(altitude_proxy, 4))
+print("Robot Type:", robot_type)
+print("Industry:", industry_1)
+
+print("\nSESSION 2 – AMAZON")
+print("Minimum Distance (m):", round(min_distance, 3))
+print("Velocity:", velocity)
+print("Status:", status)
+print("Industry:", industry_2)
+
+print("\nSESSION 3 – TESLA")
+print("Selected Sensor:", selected_sensor)
+print("Maximum Range:", max_range, "meters")
+print("Industry:", industry_3)
+
+print("\nSESSION 4 – APPLE")
+print("Distance (m):", distance)
+print("Time (s):", time)
+print("Speed (m/s):", speed)
+print("Industry:", industry_4)
