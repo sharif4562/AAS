@@ -1,0 +1,20 @@
+import numpy as np
+
+sensors = {
+    "Camera": 80,
+    "Radar": 160,
+    "LiDAR": 250
+}
+
+selected_sensor = max(sensors, key=sensors.get)
+max_range = sensors[selected_sensor]
+
+industry = "Tesla Autopilot"
+
+print("Sensor Ranges (meters):")
+for sensor, rng in sensors.items():
+    print(sensor, ":", rng)
+
+print("\nSelected Sensor:", selected_sensor)
+print("Maximum Range:", max_range, "meters")
+print("Industry:", industry)
