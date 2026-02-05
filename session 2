@@ -1,0 +1,27 @@
+import os
+import numpy as np
+
+DEPTH_FILE = "depth_frame.npy"
+
+if not os.path.exists(DEPTH_FILE):
+    depth_frame = np.random.uniform(0.3, 3.0, (480, 640))
+    np.save(DEPTH_FILE, depth_frame)
+
+depth_frame = np.load(DEPTH_FILE)
+
+min_distance = np.min(depth_frame)
+
+velocity = 1.0
+
+if min_distance < 0.5:
+    velocity = 0
+    status = "Robot Halted"
+    industry = "Amazon Fulfillment Robots"
+else:
+    status = "Robot Moving"
+    industry = "Autonomous Navigation"
+
+print("Minimum Distance (m):", round(min_distance, 3))
+print("Velocity:", velocity)
+print("Status:", status)
+print("Industry:", industry)
