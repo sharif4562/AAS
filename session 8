@@ -1,0 +1,9 @@
+focal_length = 500
+X = 3
+Z = 5
+
+u = focal_length * X / Z
+industry = "AR/VR Systems"
+
+print("Projected Pixel Coordinate u =", round(u, 2), "px")
+print("Industry:", industry)
