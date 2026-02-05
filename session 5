@@ -1,0 +1,21 @@
+import pandas as pd
+from sklearn.datasets import load_iris
+
+iris = load_iris()
+
+data = pd.DataFrame(iris.data, columns=iris.feature_names)
+labels = iris.target
+
+if labels is not None and len(labels) == len(data):
+    model_type = "Classification Model"
+    learning_type = "Supervised Learning"
+else:
+    model_type = "Clustering Model"
+    learning_type = "Unsupervised Learning"
+
+industry = "Azure ML"
+
+print("Labeled Data Detected:", labels is not None)
+print("Learning Type:", learning_type)
+print("Selected Model:", model_type)
+print("Industry:", industry)
