@@ -1,0 +1,18 @@
+```python id="h2k5nv"
+# SESSION 29 – SAUDI ARAMCO (Hybrid Energy)
+# Battery Health – Charging Mode Selection Example
+
+# Example battery state-of-charge (SOC) and health
+soc = 45       # percent
+health = 80    # percent
+
+# Simple rule-based charging mode
+if soc < 50 and health > 70:
+    charging_mode = "Fast Charge"
+elif soc < 50 and health <= 70:
+    charging_mode = "Normal Charge"
+else:
+    charging_mode = "Trickle Charge"
+
+print("Charging Mode:", charging_mode)
+```
