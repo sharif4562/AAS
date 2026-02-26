@@ -1,0 +1,22 @@
+```python
+# SESSION 7 – JPMORGAN (Optimization)
+# Synthetic Optimization Function
+# Goal: Compute derivative → Find minima → Output: x = 3
+
+import sympy as sp
+
+# 1. Define variable
+x = sp.symbols('x')
+
+# 2. Define synthetic function (minimum at x = 3)
+f = (x - 3)**2 + 5
+
+# 3. Compute derivative
+derivative = sp.diff(f, x)
+
+# 4. Solve derivative = 0 to find minima
+critical_points = sp.solve(derivative, x)
+
+print("Derivative:", derivative)
+print("Minimum at x =", critical_points[0])
+```
