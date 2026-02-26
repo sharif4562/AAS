@@ -1,0 +1,18 @@
+```python id="m4k7rq"
+# SESSION 39 – NVIDIA (IMU Correction)
+# IMU Drift Correction – Stabilization Example
+
+# Example IMU readings
+imu_drift_detected = True
+
+# Apply correction
+if imu_drift_detected:
+    imu_corrected = True
+else:
+    imu_corrected = False
+
+# Check final status
+status = "Stabilized" if imu_corrected else "Unstable"
+
+print(status)
+```
