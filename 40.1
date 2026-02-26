@@ -1,0 +1,17 @@
+# SESSION 40 – TESLA (PID Control)
+# Line Following – PID Control Example
+
+# Example PID terms
+Kp = 0.8
+Ki = 0.2
+Kd = 0.4
+
+# Example error values
+error = 1.0
+integral = 0.5
+derivative = 0.6
+
+# Compute PID control output
+control = Kp * error + Ki * integral + Kd * derivative
+
+print("Control =", round(control, 2))
