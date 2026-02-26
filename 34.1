@@ -1,0 +1,21 @@
+```python id="t6k9vp"
+# SESSION 34 – GOOGLE (Teleoperation)
+# Keyboard Teleop – Simple Command Interpretation
+
+# Example keyboard input
+key_input = "a"   # 'a' for left turn in standard teleop mapping
+
+# Map input to action
+if key_input == "a":
+    action = "Left Turn"
+elif key_input == "d":
+    action = "Right Turn"
+elif key_input == "w":
+    action = "Move Forward"
+elif key_input == "s":
+    action = "Move Backward"
+else:
+    action = "Stop"
+
+print(action)
+```
