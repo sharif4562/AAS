@@ -1,0 +1,18 @@
+```python id="w5r9kt"
+# SESSION 30 – GOOGLE (Wall Following)
+# Simple Wall Following Decision Example
+
+# Example distance measurements from wall (meters)
+distance_to_wall = 0.3   # current distance
+safe_distance = 0.5      # desired distance
+
+# Wall following control decision
+if distance_to_wall < safe_distance:
+    action = "Move Away"
+elif distance_to_wall > safe_distance:
+    action = "Move Closer"
+else:
+    action = "Maintain Distance"
+
+print(action)
+```
