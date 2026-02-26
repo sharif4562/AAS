@@ -1,0 +1,17 @@
+```python id="q3r8mt"
+# SESSION 21 – NVIDIA (Reinforcement Learning)
+# OpenAI Gym – Example Q-value Lookup
+
+# Example Q-table entry
+Q_table = {
+    (0, 0): 1,
+    (0, 1): 4,   # state=0, action=1
+    (1, 0): 2,
+    (1, 1): 3
+}
+
+# Access Q-value for state=0, action=1
+Q = Q_table[(0, 1)]
+
+print("Q =", Q)
+```
