@@ -1,0 +1,127 @@
+import json
+import requests
+from PIL import Image
+from io import BytesIO
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+
+# Since we can't automatically download COCO API in all environments,
+# we'll create a function that simulates COCO-style annotations
+
+def create_sample_coco_annotation():
+    """
+    Creates a sample annotation mimicking COCO dataset format
+    COCO stores bounding boxes as [x, y, width, height]
+    """
+    sample_annotation = {
+        "id": 1,
+        "image_id": 1,
+        "category_id": 1,  # person
+        "bbox": [120, 85, 45, 40],  # [x, y, width, height]
+        "area": 45 * 40,  # width * height = 1800
+        "segmentation": [],
+        "iscrowd": 0
+    }
+    return sample_annotation
+
+def calculate_area_from_bbox(bbox):
+    """
+    Calculate object area from bounding box
+    Formula: area = width * height
+    """
+    x, y, width, height = bbox
+    area = width * height
+    return area
+
+# Main execution
+print("=" * 60)
+print("AMAZON - Warehouse Vision: COCO Object Area Calculation")
+print("=" * 60)
+
+# Create sample COCO-style annotation
+annotation = create_sample_coco_annotation()
+bbox = annotation['bbox']
+width, height = bbox[2], bbox[3]
+
+print("\n COCO Dataset Sample:")
+print(f"   Object: Person (category_id: {annotation['category_id']})")
+print(f"   Bounding Box: [x={bbox[0]}, y={bbox[1]}, width={width}, height={height}]")
+
+# Calculate area using the formula
+calculated_area = calculate_area_from_bbox(bbox)
+annotation_area = annotation['area']
+
+print(f"\n📐 Area Calculation:")
+print(f"   Formula: area = width × height")
+print(f"   Calculation: {width} × {height} = {calculated_area} px²")
+print(f"   COCO annotation area: {annotation_area} px² (verification)")
+
+print(f"\n OUTPUT: {calculated_area} px²")
+print(f"   Industry: Warehouse Vision")
+
+# Visual representation (text-based)
+print(f"\n  Bounding Box Visualization:")
+print(f"   (0,0) +-------------------+")
+print(f"        |                   |")
+print(f"        |    ┌──────────┐    |")
+print(f"        |    │  Object  │    |")
+print(f"        |    │  area={calculated_area} │    |")
+print(f"        |    │ {width}×{height} px │    |")
+print(f"        |    └──────────┘    |")
+print(f"        |                   |")
+print(f"        +-------------------+ (image)")
+
+# Optional: Create actual visualization if matplotlib is available
+try:
+    # Create a blank image
+    fig, ax = plt.subplots(1, figsize=(8, 6))
+    ax.set_xlim(0, 320)
+    ax.set_ylim(240, 0)  # Inverted for image coordinates
+    ax.set_aspect('equal')
+    
+    # Draw bounding box
+    rect = patches.Rectangle(
+        (bbox[0], bbox[1]), width, height,
+        linewidth=2, edgecolor='r', facecolor='none'
+    )
+    ax.add_patch(rect)
+    
+    # Add area text
+    ax.text(
+        bbox[0] + width/2, bbox[1] + height/2,
+        f'Area: {calculated_area} px²\n{width}×{height}',
+        ha='center', va='center',
+        bbox=dict(boxstyle="round,pad=0.3", facecolor="yellow", alpha=0.7)
+    )
+    
+    ax.set_title(f'COCO Object Bounding Box (area = {calculated_area} px²)')
+    ax.set_xlabel('x (pixels)')
+    ax.set_ylabel('y (pixels)')
+    ax.grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('coco_bbox_area.png')
+    print(f"\n Visualization saved as 'coco_bbox_area.png'")
+except Exception as e:
+    print(f"\n Visualization skipped: {e}")
+
+print("\n" + "=" * 60)
+print(" About COCO Annotations:")
+print("   • Bounding boxes are stored as [x, y, width, height]")
+print("   • Area is pre-computed in annotations as width × height")
+print("   • Used extensively in warehouse object detection")
+print("=" * 60)
+
+# Show how to work with multiple objects
+print("\n Multiple Objects Example:")
+multiple_objects = [
+    {"id": 1, "bbox": [45, 30, 60, 50], "category": "box"},
+    {"id": 2, "bbox": [150, 80, 40, 45], "category": "pallet"},
+    {"id": 3, "bbox": [220, 120, 55, 35], "category": "forklift"}
+]
+
+for obj in multiple_objects:
+    w, h = obj['bbox'][2], obj['bbox'][3]
+    area = w * h
+    print(f"   {obj['category']:8}: {w:2} × {h:2} = {area:4} px²")
