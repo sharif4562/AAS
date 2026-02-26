@@ -1,0 +1,13 @@
+```python id="v8m2jt"
+# SESSION 13 – APPLE (Sensor Fusion)
+# EuRoC MAV – Simple IMU + Vision Fusion
+
+# Example sensor readings (degrees)
+imu_angle = 28.0      # from IMU
+vision_angle = 32.0   # from vision system
+
+# Fuse sensors (average)
+fused = (imu_angle + vision_angle) / 2
+
+print(fused, "°")
+```
