@@ -1,0 +1,25 @@
+```python id="p9k2lw"
+# SESSION 37 – AMAZON (Patrolling)
+# Waypoint Navigation – Continuous Patrol Example
+
+# Example list of waypoints
+waypoints = [(0,0), (5,0), (5,5), (0,5)]
+
+# Simple patrol loop
+current_index = 0
+patrolling = True
+
+while patrolling:
+    # Move to current waypoint
+    waypoint = waypoints[current_index]
+    print("Navigating to waypoint:", waypoint)
+    
+    # Update to next waypoint
+    current_index = (current_index + 1) % len(waypoints)
+    
+    # For demonstration, break after one full loop
+    if current_index == 0:
+        patrolling = False
+
+print("Continuous Patrol")
+```
