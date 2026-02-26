@@ -1,0 +1,22 @@
+```python
+# SESSION 10 – TESLA (Edge Detection)
+# Edge = sqrt(Gx^2 + Gy^2)
+
+import cv2
+import numpy as np
+
+# 1. Load image (replace with your BSDS image path)
+image = cv2.imread("test.jpg", cv2.IMREAD_GRAYSCALE)
+
+# 2. Compute Sobel gradients
+Gx = cv2.Sobel(image, cv2.CV_64F, 1, 0, ksize=3)
+Gy = cv2.Sobel(image, cv2.CV_64F, 0, 1, ksize=3)
+
+# 3. Edge magnitude
+edge = np.sqrt(Gx**2 + Gy**2)
+
+# 4. Example pixel output
+edge_value = int(edge[0, 0])
+
+print(edge_value)
+```
