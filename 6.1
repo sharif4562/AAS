@@ -1,0 +1,37 @@
+```python
+# SESSION 6 – GOOGLE (ROS2 Communication)
+# ROS2 TurtleBot3 – Publish Twist → Robot Moves
+
+# Run this inside a ROS2 workspace (e.g., Humble/Foxy)
+
+import rclpy
+from rclpy.node import Node
+from geometry_msgs.msg import Twist
+
+
+class MoveTurtleBot(Node):
+
+    def __init__(self):
+        super().__init__('move_turtlebot')
+        self.publisher_ = self.create_publisher(Twist, '/cmd_vel', 10)
+        self.timer = self.create_timer(0.5, self.publish_velocity)
+
+    def publish_velocity(self):
+        msg = Twist()
+        msg.linear.x = 0.2      # Forward speed (m/s)
+        msg.angular.z = 0.0     # No rotation
+        self.publisher_.publish(msg)
+        self.get_logger().info("Publishing Twist → Robot Moves")
+
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = MoveTurtleBot()
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
+```
