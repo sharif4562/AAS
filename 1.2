@@ -1,0 +1,48 @@
+import pandas as pd
+import numpy as np
+from scipy import signal
+import zipfile
+import requests
+import io
+
+# Download and load UCI HAR dataset
+url = "https://archive.ics.uci.edu/ml/machine-learning-databases/00240/UCI%20HAR%20Dataset.zip"
+response = requests.get(url)
+zip_file = zipfile.ZipFile(io.BytesIO(response.content))
+
+# Load features
+features = pd.read_csv(zip_file.open('UCI HAR Dataset/features.txt'), sep='\s+', header=None, names=['idx', 'feature'])
+feature_names = features['feature'].tolist()
+
+# Load test data
+X_test = pd.read_csv(zip_file.open('UCI HAR Dataset/test/X_test.txt'), sep='\s+', header=None, names=feature_names)
+
+# Extract velocity and altitude proxies
+# Using body acceleration signals as velocity proxy
+velocity_cols = [col for col in X_test.columns if 'BodyAcc' in col and 'mean()' in col]
+velocity_proxy = X_test[velocity_cols].mean(axis=1)
+
+# Using gravity acceleration as altitude proxy (vertical component)
+gravity_cols = [col for col in X_test.columns if 'GravityAcc' in col and 'mean()' in col and 'Y' in col]
+altitude_proxy = X_test[gravity_cols].mean(axis=1) if gravity_cols else np.zeros(len(X_test))
+
+# Rule-based classification
+robot_type = []
+for alt in altitude_proxy:
+    if alt > 0:
+        robot_type.append("Aerial Robot")
+    else:
+        robot_type.append("Ground Robot")
+
+# Create output DataFrame
+output_df = pd.DataFrame({
+    'altitude_proxy': altitude_proxy,
+    'robot_type': robot_type,
+    'industry': 'NVIDIA Jetson Drone Systems' if any(alt > 0 for alt in altitude_proxy) else 'NVIDIA Jetson Robotics'
+})
+
+# Display sample results
+print("Sample of 5 readings:")
+print(output_df.head())
+print(f"\nClassification: {output_df['robot_type'].iloc[0]}")
+print(f"Industry: {output_df['industry'].iloc[0]}")
