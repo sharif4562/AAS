@@ -1,0 +1,17 @@
+```python id="l9m3kx"
+# SESSION 35 – APPLE (Localization)
+# AMCL – Pose Estimation Status Check
+
+# Example AMCL status flags
+particle_filter_converged = True
+sensor_data_valid = True
+map_loaded = True
+
+# Determine localization accuracy
+if particle_filter_converged and sensor_data_valid and map_loaded:
+    status = "Accurate Localization"
+else:
+    status = "Localization Uncertain"
+
+print(status)
+```
