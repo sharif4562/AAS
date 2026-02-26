@@ -1,0 +1,21 @@
+```python id="v5k7rq"
+# SESSION 36 – NVIDIA (Line Detection)
+# OpenCV – Line Following Decision Example
+
+import cv2
+import numpy as np
+
+# Example line position in image (x-coordinate of line centroid)
+line_x = 100
+image_center = 160  # assuming image width = 320
+
+# Line following control
+if line_x < image_center - 10:
+    action = "Turn Left"
+elif line_x > image_center + 10:
+    action = "Turn Right"
+else:
+    action = "Go Straight"
+
+print(action)
+```
