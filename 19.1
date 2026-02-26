@@ -1,0 +1,13 @@
+```python id="b4x9hj"
+# SESSION 19 – GOOGLE (Belief Update)
+# Bayesian Network – Belief Probability Update Example
+
+# Example prior and likelihood
+prior = 0.5
+likelihood = 0.4
+
+# Simple belief update (Bayes rule simplified)
+posterior = prior * likelihood / (prior * likelihood + (1 - prior) * (1 - likelihood))
+
+print(round(posterior, 2))
+```
