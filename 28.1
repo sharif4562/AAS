@@ -1,0 +1,20 @@
+```python id="o9v3kl"
+# SESSION 28 – TESLA (Obstacle Avoidance)
+# CARLA Simulator – Simple Obstacle Avoidance Decision
+
+# Example sensor distances (front, left, right) in meters
+front_distance = 1.0
+left_distance = 2.5
+right_distance = 3.0
+
+# Obstacle avoidance decision
+if front_distance < 2.0:
+    if right_distance > left_distance:
+        action = "Turn Right"
+    else:
+        action = "Turn Left"
+else:
+    action = "Move Forward"
+
+print(action)
+```
