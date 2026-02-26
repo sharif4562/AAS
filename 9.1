@@ -1,0 +1,26 @@
+```python
+# SESSION 9 – NVIDIA (Image Processing)
+# CIFAR-10 – RGB to Grayscale Conversion
+
+import numpy as np
+from tensorflow.keras.datasets import cifar10
+
+# 1. Load CIFAR-10 dataset
+(x_train, y_train), (_, _) = cifar10.load_data()
+
+# 2. Select one image
+image = x_train[0]   # shape: (32, 32, 3)
+
+# 3. Extract RGB channels
+R = image[:, :, 0]
+G = image[:, :, 1]
+B = image[:, :, 2]
+
+# 4. Convert to grayscale
+gray = 0.3 * R + 0.59 * G + 0.11 * B
+
+# 5. Example pixel output
+pixel_value = int(gray[0, 0])
+
+print("Grayscale Pixel Value:", pixel_value)
+```
